@@ -15,7 +15,8 @@
     "setup-db:prod": "NODE_ENV=production tsx scripts/setup-db.js",
     "generate-jwt": "tsx scripts/generate-jwt-secret.js",
     "create-user": "tsx scripts/create-user.js",
-    "update-user-password": "tsx scripts/update-user-password.js"
+    "update-user-password": "tsx scripts/update-user-password.js",
+    "restore-to-railway": "node backup/restore-to-railway.js"
   },
   "dependencies": {
     "jose": "6.1.0",
