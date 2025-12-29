@@ -16,6 +16,7 @@
     "generate-jwt": "tsx scripts/generate-jwt-secret.js",
     "create-user": "tsx scripts/create-user.js",
     "update-user-password": "tsx scripts/update-user-password.js",
+    "test-railway-connection": "node scripts/test-railway-connection.js",
     "restore-to-railway": "node backup/restore-to-railway.js"
   },
   "dependencies": {
