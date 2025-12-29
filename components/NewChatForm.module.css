@@ -1,0 +1,51 @@
+.form {
+  padding: var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  overflow-y: auto;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.formField label {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--foreground);
+}
+
+.errorText {
+  color: var(--error);
+  font-size: 0.875rem;
+  margin-top: var(--spacing-1);
+}
+
+.submitButton {
+  margin-top: var(--spacing-2);
+}
+
+.autoOpenBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  background-color: color-mix(in srgb, var(--warning), white 90%);
+  color: var(--warning-foreground);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid color-mix(in srgb, var(--warning), white 70%);
+}
+
+.autoOpenBadge svg {
+  flex-shrink: 0;
+}
+
+:global(.dark) .autoOpenBadge {
+  background-color: color-mix(in srgb, var(--warning), black 80%);
+  border-color: color-mix(in srgb, var(--warning), black 60%);
+}

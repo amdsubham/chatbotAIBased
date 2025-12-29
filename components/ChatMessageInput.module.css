@@ -1,0 +1,203 @@
+.chatInputContainer {
+  border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  background: linear-gradient(to top, 
+    var(--surface) 0%, 
+    color-mix(in srgb, var(--surface) 98%, var(--muted)) 100%);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.chatInputArea {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4) var(--spacing-5);
+}
+
+.chatInput {
+  flex: 1;
+  min-height: 2.75rem;
+  max-height: 120px;
+  padding: 0.625rem var(--spacing-4);
+  border-radius: calc(var(--radius-full) * 1.2);
+  resize: none;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1.5px solid var(--border);
+  background-color: var(--surface);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.chatInput:hover {
+  border-color: color-mix(in srgb, var(--border) 70%, var(--muted-foreground));
+}
+
+.chatInput:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 15%, transparent),
+              0 2px 4px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.chatInputArea button[type="submit"] {
+  background: linear-gradient(135deg, var(--primary) 0%, color-mix(in srgb, var(--primary) 90%, var(--foreground)) 100%);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 30%, transparent),
+              0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chatInputArea button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 35%, transparent),
+              0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.chatInputArea button[type="submit"]:active:not(:disabled) {
+  transform: translateY(0) scale(1);
+}
+
+.chatInputArea button:not([type="submit"]) {
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chatInputArea button:not([type="submit"]):hover:not(:disabled) {
+  transform: scale(1.08);
+}
+
+.chatInputArea button:not([type="submit"]):active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+.imagePreview {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4) var(--spacing-5);
+  background: linear-gradient(to right,
+    color-mix(in srgb, var(--muted) 80%, transparent) 0%,
+    color-mix(in srgb, var(--muted) 60%, transparent) 100%);
+  border-bottom: 1px solid var(--border);
+  animation: slideDown var(--animation-duration-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.previewImage {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
+              0 1px 3px rgba(0, 0, 0, 0.06);
+  border: 2px solid var(--surface);
+}
+
+.previewInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.previewFileName {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.previewFileSize {
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+  margin-top: var(--spacing-1);
+  letter-spacing: 0.01em;
+}
+
+.removeImageButton {
+  flex-shrink: 0;
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.removeImageButton:hover {
+  transform: scale(1.1) rotate(90deg);
+}
+
+.imageError {
+  padding: var(--spacing-3) var(--spacing-5);
+  background: linear-gradient(to right,
+    color-mix(in srgb, var(--error) 12%, transparent) 0%,
+    color-mix(in srgb, var(--error) 8%, transparent) 100%);
+  color: var(--error);
+  font-size: 0.9375rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--error) 30%, transparent);
+  letter-spacing: 0.01em;
+  animation: slideDown var(--animation-duration-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 768px) {
+  .chatInputArea {
+    padding: var(--spacing-3) var(--spacing-4);
+    gap: var(--spacing-2);
+  }
+
+  .chatInput {
+    min-height: 3.5rem;
+    max-height: 180px;
+  }
+
+  .imagePreview {
+    padding: var(--spacing-3) var(--spacing-4);
+    gap: var(--spacing-2);
+  }
+
+  .previewImage {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .chatInputArea {
+    padding: var(--spacing-2) var(--spacing-3);
+    gap: var(--spacing-2);
+  }
+
+  .chatInput {
+    min-height: 3.75rem;
+    max-height: 200px;
+  }
+
+  .imagePreview {
+    padding: var(--spacing-2) var(--spacing-3);
+    gap: var(--spacing-2);
+  }
+
+  .previewImage {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .previewFileName {
+    font-size: 0.875rem;
+  }
+
+  .previewFileSize {
+    font-size: 0.75rem;
+  }
+}

@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.container.inline {
+  /* Default inline layout - explicitly defined for type safety */
+  flex-direction: row;
+}
+
+.container.block {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+}
+
+.badgeContainer {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: var(--spacing-2);
+  fill: currentColor;
+}
+
+.available {
+  color: var(--success);
+}
+
+.offline {
+  color: var(--muted-foreground);
+}
+
+.nextAvailableText {
+  margin: 0;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* Loading State Skeletons */
+.skeletonBadge {
+  width: 120px;
+  height: 28px; /* Matches badge height */
+  border-radius: var(--radius-full);
+}
+
+.skeletonText {
+  width: 220px;
+  height: 1rem;
+  border-radius: var(--radius-sm);
+}
+
+.container.block .skeletonText {
+  width: 180px;
+}

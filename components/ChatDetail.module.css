@@ -1,0 +1,564 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  border-radius: var(--radius-md);
+  flex: 1;
+  height: 100%;
+  min-height: 0;
+}
+
+
+
+.ratingSection {
+  padding: var(--spacing-4);
+  padding-top: 0;
+  flex-shrink: 0;
+}
+
+.ratingCard {
+  background-color: color-mix(in srgb, var(--success) 10%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.ratingHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+}
+
+.ratingStars {
+  display: flex;
+  gap: var(--spacing-1);
+}
+
+.starFilled {
+  color: var(--primary);
+}
+
+.starOutline {
+  color: var(--muted-foreground);
+}
+
+.ratingTimestamp {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.feedbackText {
+  margin: 0;
+  color: var(--foreground);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.feedbackTextEmpty {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-style: italic;
+  font-size: 0.9375rem;
+}
+
+
+
+.messagesContainer {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  min-height: 0;
+}
+
+.messageWrapper {
+  display: flex;
+  gap: var(--spacing-3);
+  max-width: 80%;
+}
+
+.avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  cursor: help;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.messageBubble {
+  padding: var(--spacing-3) var(--spacing-4);
+  border-radius: var(--radius-lg);
+  line-height: 1.5;
+}
+
+.messageBubble p {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.messageFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-2);
+}
+
+.messageActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  flex-shrink: 0;
+}
+
+.messageTimestamp {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+}
+
+.emailButton,
+.deleteButton {
+  background: none;
+  border: none;
+  padding: var(--spacing-1);
+  cursor: pointer;
+  color: inherit;
+  opacity: 0;
+  transition: opacity var(--animation-duration-fast), background-color var(--animation-duration-fast), color var(--animation-duration-fast);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.emailButton:hover:not(:disabled),
+.deleteButton:hover:not(:disabled) {
+  opacity: 1;
+  background-color: color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.deleteButton:hover:not(:disabled) {
+  color: var(--error);
+  background-color: color-mix(in srgb, var(--error) 15%, transparent);
+}
+
+.emailButton:active:not(:disabled),
+.deleteButton:active:not(:disabled) {
+  background-color: color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.deleteButton:active:not(:disabled) {
+  background-color: color-mix(in srgb, var(--error) 25%, transparent);
+}
+
+.emailButton:disabled,
+.deleteButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.messageBubble:hover .emailButton,
+.messageBubble:hover .deleteButton {
+  opacity: 0.7;
+}
+
+/* Sender-specific styles */
+.user {
+  align-self: flex-start;
+}
+.bubble-user {
+  background-color: var(--surface);
+  color: var(--surface-foreground);
+  border-top-left-radius: var(--radius-sm);
+}
+
+.ai, .admin {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+.bubble-ai, .bubble-admin {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-top-right-radius: var(--radius-sm);
+}
+.bubble-ai .messageTimestamp, .bubble-admin .messageTimestamp {
+  color: color-mix(in srgb, var(--primary-foreground) 70%, transparent);
+}
+
+.bubble-ai .emailButton, .bubble-admin .emailButton {
+  color: var(--primary-foreground);
+}
+
+.system {
+  align-self: center;
+  background-color: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: flex-start;
+}
+
+.errorCode {
+  font-family: var(--font-family-monospace);
+  background-color: color-mix(in srgb, var(--foreground) 5%, transparent);
+  padding: var(--spacing-2);
+  border-radius: var(--radius-sm);
+  margin-top: var(--spacing-2);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.imageUpload {
+  max-width: 100%;
+  border-radius: var(--radius);
+  margin-top: var(--spacing-2);
+  cursor: pointer;
+  transition: opacity var(--animation-duration-fast);
+}
+
+.imageUpload:hover {
+  opacity: 0.9;
+}
+
+.imageUpload:active {
+  opacity: 0.8;
+}
+
+/* Suggestions Panel Styles */
+.suggestionsPanel {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  max-width: 100%;
+}
+
+.inputForm {
+  display: flex;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--border);
+  background-color: var(--surface);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+.inputWrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.imagePreview {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  background-color: var(--muted);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.previewThumbnail {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.previewInfo {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  min-width: 0;
+}
+
+.previewName {
+  font-size: 0.875rem;
+  color: var(--foreground);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.previewSize {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.removeButton {
+  flex-shrink: 0;
+}
+
+.uploadError {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  background-color: color-mix(in srgb, var(--error) 10%, transparent);
+  color: var(--error);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+}
+
+.inputRow {
+  display: flex;
+  gap: var(--spacing-3);
+  align-items: flex-end;
+}
+
+.suggestionsToggleButton {
+  flex-shrink: 0;
+}
+
+.messageInput {
+  flex-grow: 1;
+  min-height: 2.5rem;
+  max-height: 150px;
+  resize: none;
+}
+
+/* Ensure proper spacing on mobile for better visibility */
+@media (max-width: 768px) {
+  .messageInput {
+    min-height: 3.5rem;
+    max-height: 180px;
+  }
+
+  .container {
+    /* Ensure messages container takes up available space on mobile */
+    max-height: 100vh;
+  }
+
+  .messagesContainer {
+    /* Add a minimum height to ensure messages are visible above keyboard */
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 430px) {
+  .messageInput {
+    min-height: 3.75rem;
+    max-height: 200px;
+  }
+
+  .messagesContainer {
+    /* Increase minimum visible area on small screens */
+    min-height: 250px;
+  }
+}
+
+.errorState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--error);
+}
+
+/* Mobile - always show action buttons */
+@media (max-width: 768px) {
+  .emailButton,
+  .deleteButton {
+    opacity: 1;
+  }
+}
+
+/* Mobile responsiveness - Medium screens */
+@media (max-width: 768px) {
+  .messagesContainer {
+    padding: var(--spacing-3);
+    gap: var(--spacing-3);
+  }
+
+  .messageWrapper {
+    max-width: 90%;
+    gap: var(--spacing-2);
+  }
+
+  .avatar {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .messageBubble {
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+
+  .ratingSection {
+    padding: var(--spacing-3);
+    padding-top: 0;
+  }
+
+  .ratingCard {
+    padding: var(--spacing-3);
+    gap: var(--spacing-2);
+  }
+
+  .ratingHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+  }
+
+  .ratingStars svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .ratingTimestamp {
+    font-size: 0.8125rem;
+  }
+
+  .feedbackText,
+  .feedbackTextEmpty {
+    font-size: 0.875rem;
+  }
+
+
+
+  .inputForm {
+    padding: var(--spacing-3);
+    gap: var(--spacing-2);
+  }
+
+  .imagePreview {
+    padding: var(--spacing-2);
+    gap: var(--spacing-2);
+  }
+
+  .previewThumbnail {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .inputRow {
+    gap: var(--spacing-2);
+  }
+
+  .inputRow button,
+  .suggestionsToggleButton {
+    min-width: 2.75rem;
+    min-height: 2.75rem; /* 44px touch target */
+  }
+
+  .emailButton,
+  .deleteButton {
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+  }
+}
+
+/* Mobile responsiveness - Small screens */
+@media (max-width: 430px) {
+  .messagesContainer {
+    padding: var(--spacing-2);
+    gap: var(--spacing-2);
+  }
+
+  .messageWrapper {
+    max-width: 95%;
+  }
+
+  .messageBubble {
+    font-size: 0.9375rem;
+  }
+
+  .messageTimestamp {
+    font-size: 0.6875rem;
+  }
+
+  .emailButton,
+  .deleteButton {
+    padding: var(--spacing-1);
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+  }
+
+  .ratingSection {
+    padding: var(--spacing-2);
+    padding-top: 0;
+  }
+
+  .ratingCard {
+    padding: var(--spacing-2);
+  }
+
+  .ratingStars {
+    gap: 0.125rem;
+  }
+
+  .ratingStars svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .feedbackText,
+  .feedbackTextEmpty {
+    font-size: 0.8125rem;
+  }
+
+
+
+  .inputForm {
+    padding: var(--spacing-2);
+  }
+
+  .imagePreview {
+    gap: var(--spacing-2);
+  }
+
+  .previewThumbnail {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .previewName {
+    font-size: 0.8125rem;
+  }
+
+  .previewSize {
+    font-size: 0.6875rem;
+  }
+
+  .uploadError {
+    font-size: 0.8125rem;
+    padding: var(--spacing-2);
+  }
+
+  .system {
+    font-size: 0.8125rem;
+  }
+
+  .errorCode {
+    font-size: 0.75rem;
+    padding: var(--spacing-1);
+  }
+}

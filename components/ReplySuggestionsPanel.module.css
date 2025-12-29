@@ -1,0 +1,185 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 320px;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--surface-foreground);
+  margin: 0;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: var(--spacing-3);
+}
+
+.section {
+  margin-bottom: var(--spacing-6);
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.icon {
+  color: var(--primary);
+}
+
+.modeIndicator {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  margin: 0 0 var(--spacing-2) 0;
+  font-style: italic;
+}
+
+.draftPreview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding: var(--spacing-2);
+  background-color: var(--muted);
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing-3);
+  border-left: 2px solid var(--primary);
+}
+
+.draftLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.draftText {
+  font-size: 0.875rem;
+  color: var(--foreground);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.suggestionItem {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius);
+  background-color: var(--muted);
+  border: 1px solid var(--border);
+  text-align: left;
+  font-size: 0.875rem;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background-color var(--animation-duration-fast) ease, border-color var(--animation-duration-fast) ease;
+}
+
+.suggestionItem:hover {
+  background-color: color-mix(in srgb, var(--primary), white 90%);
+  border-color: color-mix(in srgb, var(--primary), white 80%);
+}
+
+.shortcutName {
+  font-weight: 600;
+  display: block;
+  margin-bottom: var(--spacing-1);
+}
+
+.shortcutMessage {
+  color: var(--muted-foreground);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skeleton {
+  height: 2.5rem;
+  width: 100%;
+}
+
+.errorState,
+.emptyState {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  padding: var(--spacing-4) var(--spacing-2);
+  text-align: center;
+}
+
+.errorState {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--spacing-2);
+  color: var(--error);
+}
+
+.errorContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.retryHint {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  font-style: italic;
+}

@@ -1,0 +1,29 @@
+.dialogContent {
+  max-width: 42rem;
+  width: 90vw;
+}
+
+.analyzeContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--spacing-4);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

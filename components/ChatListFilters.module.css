@@ -1,0 +1,267 @@
+.controls {
+  padding-bottom: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.searchRow {
+  display: flex;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-4);
+}
+
+.searchWrapper {
+  position: relative;
+  flex: 1;
+}
+
+.searchIcon {
+  position: absolute;
+  left: var(--spacing-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.searchInput {
+  padding-left: calc(var(--spacing-3) * 2 + 16px);
+}
+
+.refreshButton {
+  flex-shrink: 0;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.advancedFiltersButton {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.filterCountBadge {
+  margin-left: var(--spacing-1);
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: 0.75rem;
+  min-width: 1.25rem;
+  height: 1.25rem;
+}
+
+.advancedFiltersPanel {
+  background-color: var(--muted);
+  border-radius: var(--radius);
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  animation: slideDown 200ms ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filterRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.filterLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: var(--spacing-1);
+}
+
+.datePickerGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.datePickerRow {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.datePicker {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: 0.875rem;
+  color: var(--foreground);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxLabel span {
+  flex: 1;
+}
+
+.activeFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-4);
+  align-items: center;
+}
+
+.filterBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding-right: var(--spacing-2);
+}
+
+.clearFilterButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  opacity: 0.7;
+  transition: opacity var(--animation-duration-fast);
+}
+
+.clearFilterButton:hover {
+  opacity: 1;
+}
+
+.clearAllButton {
+  height: auto;
+  padding: var(--spacing-1) var(--spacing-3);
+}
+
+.filterGroup {
+  display: flex;
+  gap: var(--spacing-2);
+  overflow-x: auto;
+}
+
+/* Mobile responsiveness - Medium screens */
+@media (max-width: 768px) {
+  .searchRow {
+    flex-wrap: wrap;
+  }
+
+  .searchWrapper {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .refreshButton,
+  .advancedFiltersButton {
+    min-height: 2.75rem; /* 44px touch target */
+  }
+
+  .filterGroup {
+    flex-wrap: wrap;
+  }
+
+  .filterGroup button {
+    min-height: 2.75rem;
+  }
+
+  .datePickerRow {
+    flex-direction: column;
+  }
+
+  .datePicker {
+    width: 100%;
+    min-height: 2.75rem;
+  }
+}
+
+/* Mobile responsiveness - Small screens */
+@media (max-width: 430px) {
+  .controls {
+    padding-bottom: var(--spacing-3);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .searchRow {
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .searchInput {
+    font-size: 0.9375rem;
+  }
+
+  .advancedFiltersPanel {
+    padding: var(--spacing-3);
+    gap: var(--spacing-3);
+  }
+
+  .filterRow {
+    gap: var(--spacing-2);
+  }
+
+  .datePickerRow {
+    gap: var(--spacing-2);
+  }
+
+  .checkboxGroup {
+    gap: var(--spacing-2);
+  }
+
+  .checkboxLabel {
+    font-size: 0.8125rem;
+  }
+
+  .activeFilters {
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .filterBadge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .filterGroup {
+    gap: var(--spacing-2);
+  }
+
+  .filterGroup button {
+    font-size: 0.8125rem;
+    padding: 0.5rem 0.75rem;
+  }
+}

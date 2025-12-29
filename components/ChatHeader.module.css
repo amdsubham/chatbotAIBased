@@ -1,0 +1,100 @@
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-3) var(--spacing-4);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  background: linear-gradient(to bottom, var(--surface), color-mix(in srgb, var(--surface) 98%, var(--muted)));
+}
+
+.aiToggleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  margin-left: auto;
+}
+
+.aiToggleContent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.aiToggleLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.statusBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.statusDefault {
+  background-color: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.statusOn {
+  background-color: color-mix(in srgb, var(--success) 15%, transparent);
+  color: var(--success);
+}
+
+.statusOff {
+  background-color: color-mix(in srgb, var(--error) 15%, transparent);
+  color: var(--error);
+}
+
+.resetButton {
+  all: unset;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  text-decoration: underline;
+  align-self: flex-end;
+  transition: color var(--animation-duration-fast);
+}
+
+.resetButton:hover:not(:disabled) {
+  color: var(--foreground);
+}
+
+.resetButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .chatHeader {
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+
+  .aiToggleLabel {
+    font-size: 0.8125rem;
+  }
+
+  .statusBadge {
+    font-size: 0.6875rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .chatHeader {
+    padding: var(--spacing-2);
+    flex-wrap: wrap;
+  }
+
+  .aiToggleContainer {
+    flex-basis: 100%;
+  }
+}

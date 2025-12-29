@@ -1,0 +1,114 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  padding: var(--spacing-4);
+  background-color: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.shortcutItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-3) var(--spacing-4);
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.shortcutDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.shortcutName {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.shortcutMessage {
+  font-size: 0.9375rem;
+  color: var(--muted-foreground);
+  margin: 0;
+  /* Truncate long messages */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px; /* Adjust as needed */
+}
+
+.shortcutActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-12) 0;
+  color: var(--muted-foreground);
+  gap: var(--spacing-4);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.errorMessage {
+  font-family: var(--font-family-monospace);
+  font-size: 0.875rem;
+  color: var(--error);
+  background-color: color-mix(in srgb, var(--error) 10%, transparent);
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius);
+  max-width: 80%;
+}
+
+/* Form styles */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-4);
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.formField label {
+  font-weight: 500;
+}
+
+.error {
+  color: var(--error);
+  font-size: 0.875rem;
+}

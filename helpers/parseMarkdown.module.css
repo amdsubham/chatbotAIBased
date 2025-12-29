@@ -1,0 +1,15 @@
+.link {
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color var(--animation-duration-fast);
+}
+
+.link:hover {
+  color: var(--primary);
+  opacity: 0.8;
+}
+
+.link:visited {
+  color: var(--primary);
+}

@@ -1,0 +1,374 @@
+.messageRow {
+  display: flex;
+  gap: var(--spacing-3);
+  max-width: 85%;
+  animation: messageSlideIn var(--animation-duration-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.agentMessageRow {
+  align-self: flex-start;
+}
+
+.userMessageRow {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.messageContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.messageBubbleWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+  position: relative;
+}
+
+.senderName {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  padding: 0 var(--spacing-3);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.userMessageRow .senderName {
+  text-align: right;
+}
+
+.messageBubble {
+  padding: var(--spacing-3) var(--spacing-4);
+  border-radius: calc(var(--radius-lg) + 2px);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  letter-spacing: 0.01em;
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04),
+              0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.messageBubble:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08),
+              0 2px 6px rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+
+.agentMessageBubble {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--muted) 100%, transparent) 0%,
+    color-mix(in srgb, var(--muted) 95%, var(--border)) 100%);
+  color: var(--muted-foreground);
+  border-top-left-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+
+/* Make admin messages bolder */
+.messageRow:has(.adminAvatar) .agentMessageBubble {
+  font-weight: 600;
+}
+
+.userMessageBubble {
+  background: linear-gradient(135deg, #dc1928 0%, #b8161f 100%);
+  color: #ffffff;
+  font-weight: 600;
+  border-top-right-radius: var(--radius-sm);
+  box-shadow: 0 3px 8px rgba(220, 25, 40, 0.25),
+              0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.userMessageBubble:hover {
+  box-shadow: 0 6px 16px rgba(220, 25, 40, 0.35),
+              0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.aiAvatar {
+  background: linear-gradient(135deg, var(--secondary) 0%, color-mix(in srgb, var(--secondary) 85%, var(--foreground)) 100%);
+  color: var(--secondary-foreground);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--secondary) 30%, transparent);
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.messageRow:hover .aiAvatar {
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--secondary) 35%, transparent);
+  transform: scale(1.05);
+}
+
+.adminAvatar {
+  background: linear-gradient(135deg, var(--info) 0%, color-mix(in srgb, var(--info) 85%, var(--foreground)) 100%);
+  color: var(--info-foreground);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--info) 30%, transparent);
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.messageRow:hover .adminAvatar {
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--info) 35%, transparent);
+  transform: scale(1.05);
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* Message Image */
+.imageContainer {
+  margin-top: var(--spacing-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.messageImage {
+  display: block;
+  max-width: 100%;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
+              0 1px 4px rgba(0, 0, 0, 0.06);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.messageImage:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15),
+              0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.messageImage:active {
+  transform: scale(0.99);
+}
+
+.messageImage:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.downloadButton {
+  align-self: flex-start;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.downloadButton:hover {
+  transform: translateX(2px);
+}
+
+/* Action Buttons Container */
+.actionButtons {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: flex-start;
+  flex-shrink: 0;
+  margin-top: var(--spacing-1);
+}
+
+/* Save to Knowledge Base Button */
+.saveButton {
+  opacity: 0;
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  background: linear-gradient(135deg,
+    var(--primary) 0%,
+    color-mix(in srgb, var(--primary) 90%, var(--foreground)) 100%);
+  color: white;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.messageBubbleWrapper:hover .saveButton {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.saveButton:hover {
+  opacity: 1;
+  transform: scale(1.08);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.saveButton:active {
+  transform: scale(1.02);
+}
+
+.saveButton:focus-visible {
+  opacity: 1;
+}
+
+/* Send Email Button */
+.emailButton {
+  opacity: 0;
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  background: linear-gradient(135deg,
+    var(--secondary) 0%,
+    color-mix(in srgb, var(--secondary) 90%, var(--foreground)) 100%);
+  color: white;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--secondary) 20%, transparent);
+}
+
+.messageBubbleWrapper:hover .emailButton {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.emailButton:hover:not(:disabled) {
+  opacity: 1;
+  transform: scale(1.08);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--secondary) 30%, transparent);
+}
+
+.emailButton:active:not(:disabled) {
+  transform: scale(1.02);
+}
+
+.emailButton:focus-visible {
+  opacity: 1;
+}
+
+.emailButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Talk with Agent Button */
+.talkWithAgentContainer {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: var(--spacing-3);
+  margin-left: calc(2.5rem + var(--spacing-3)); /* Avatar width + gap */
+  animation: slideIn var(--animation-duration-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.talkWithAgentButton {
+  background: linear-gradient(135deg, var(--info) 0%, color-mix(in srgb, var(--info) 85%, var(--foreground)) 100%);
+  color: var(--info-foreground);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: var(--spacing-3) var(--spacing-4);
+  height: auto;
+  min-height: 2.75rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--info) 25%, transparent),
+              0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all var(--animation-duration-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+}
+
+.talkWithAgentButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--info) 90%, black) 0%, color-mix(in srgb, var(--info) 75%, var(--foreground)) 100%);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--info) 35%, transparent),
+              0 4px 10px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.talkWithAgentButton:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--info) 20%, transparent),
+              0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.talkWithAgentButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, var(--muted) 0%, color-mix(in srgb, var(--muted) 90%, var(--border)) 100%);
+  color: var(--muted-foreground);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.talkWithAgentButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--background),
+              0 0 0 5px var(--info);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .talkWithAgentContainer {
+    margin-left: calc(2rem + var(--spacing-2)); /* Smaller avatar on mobile */
+  }
+  
+  .talkWithAgentButton {
+    font-size: 0.875rem;
+    padding: var(--spacing-2) var(--spacing-3);
+    min-height: 2.5rem;
+  }
+  
+  .messageRow {
+    max-width: 90%;
+    gap: var(--spacing-2);
+  }
+  
+  .messageBubble {
+    padding: var(--spacing-3);
+    font-size: 0.9375rem;
+  }
+  
+  .senderName {
+    font-size: 0.75rem;
+    padding: 0 var(--spacing-2);
+  }
+}
+
+@media (max-width: 430px) {
+  .talkWithAgentContainer {
+    margin-left: 0;
+    justify-content: stretch;
+  }
+  
+  .talkWithAgentButton {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .messageRow {
+    max-width: 92%;
+  }
+  
+  .messageBubble {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: 0.875rem;
+  }
+  
+  .senderName {
+    font-size: 0.75rem;
+  }
+}

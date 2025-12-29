@@ -1,0 +1,138 @@
+# PrimeCaves Chat Widget - Integration Guide
+
+**Production URL:** https://primecaves-chatbot.floot.app
+
+The PrimeCaves Chat Widget is a universal embeddable support chat solution that works with **any website** - whether you're using Shopify, WordPress, React, Vue, vanilla JavaScript, or any other platform.
+
+---
+
+## 1. Quick Start (Basic Installation)
+
+Add these two snippets to your website, right before the closing `</body>` tag:
+That's it! The chat widget will now appear in the bottom-right corner of your website.
+
+---
+
+## 2. Configuration Options
+
+Customize the widget behavior and appearance with these options:
+
+### Required Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `merchantEmail` | string | Your email address for support notifications |
+| `shopName` | string | Your business/shop name displayed in the chat |
+| `shopDomain` | string | Your website domain |
+
+### Optional Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `apiBaseUrl` | string | `https://primecaves-chatbot.floot.app` | Backend API URL (use default) |
+| `primaryColor` | string | `#4F8EF7` | Main theme color for the widget |
+| `agentName` | string | `'Support Admin'` | Name displayed for support agent |
+| `widgetPosition` | string | `'bottom-right'` | Position: `'bottom-right'` or `'bottom-left'` |
+| `autoOpen` | boolean | `false` | Automatically open widget on page load |
+| `initialMessage` | string | `undefined` | Auto-send this message when chat starts |
+| `hideContactForm` | boolean | `false` | Skip contact form (requires all user details) |
+
+### Example with All Options
+---
+
+## 3. API Methods
+
+Once initialized, you can control the widget programmatically using these methods:
+
+### `open()`
+Opens the chat widget dialog.
+### `close()`
+Closes the chat widget dialog.
+### `openWithMessage(message)`
+Opens the widget and auto-sends a message.
+### `destroy()`
+Completely removes the widget from the page.
+---
+
+## 4. Common Use Cases
+
+### Use Case 1: Basic Installation (Shopify)
+
+Add to your theme's `theme.liquid` file before `</body>`:
+### Use Case 2: Auto-Opening on JavaScript Errors
+
+Automatically open the chat when an error occurs:
+### Use Case 3: Manual Trigger Button
+
+Add a custom button to open the chat:
+### Use Case 4: WordPress Integration
+
+Add to your theme's `footer.php` or use a plugin like "Insert Headers and Footers":
+### Use Case 5: React/Vue/SPA Integration
+
+For single-page applications, initialize in your app's entry point:
+### Use Case 6: Custom Styling & Position
+
+Customize appearance to match your brand:
+---
+
+## 5. Full Working Examples
+
+### Example 1: E-commerce Checkout Error Handler
+### Example 2: Proactive Support Trigger
+---
+
+## 6. Platform-Specific Notes
+
+### Shopify
+- Add the script to `theme.liquid` before `</body>`
+- Use Liquid tags for dynamic values: `{{ shop.email }}`, `{{ shop.name }}`
+- Works with all Shopify themes (Dawn, Debut, etc.)
+
+### WordPress
+- Add via theme files (`footer.php`) or plugins
+- Use PHP functions: `get_option('admin_email')`, `get_bloginfo('name')`
+- Compatible with all page builders (Elementor, Gutenberg, etc.)
+
+### React/Next.js/Vue
+- Load script dynamically in `useEffect` or `mounted` lifecycle
+- Remember to call `destroy()` on component unmount
+- TypeScript: Add `declare global { interface Window { PrimeCavesChatWidget: any } }`
+
+### Plain HTML
+- Just paste the script tags before `</body>`
+- No build tools or npm required
+- Works with any HTML file
+
+---
+
+## 7. Troubleshooting
+
+### Widget not appearing?
+- Check browser console for errors
+- Verify script URL is correct: `https://primecaves-chatbot.floot.app/_api/widget-sdk`
+- Ensure `init()` is called after script loads
+- Check that `merchantEmail`, `shopName`, and `shopDomain` are provided
+
+### Widget blocked by ad blockers?
+- The widget should not be blocked, but some aggressive blockers may interfere
+- Ask users to whitelist your domain
+
+### Need to reinitialize?
+- Call `destroy()` first, then `init()` again with new config
+
+### CORS issues?
+- The widget is designed to work cross-origin
+- Ensure you're using the production URL: `https://primecaves-chatbot.floot.app`
+
+---
+
+## 8. Support
+
+Need help integrating the widget? Contact us at **support@primecaves.com** or use the chat widget on our website!
+
+---
+
+**Version:** 1.0  
+**Last Updated:** 2024  
+**License:** Proprietary

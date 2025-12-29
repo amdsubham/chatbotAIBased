@@ -1,0 +1,152 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  padding: var(--spacing-4);
+  background-color: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.dayGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.dayHeader {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+.slotItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-3) var(--spacing-4);
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: background-color var(--animation-duration-fast) ease;
+}
+
+.slotItem.disabled {
+  background-color: color-mix(in srgb, var(--muted) 50%, transparent);
+  border-color: color-mix(in srgb, var(--border) 50%, transparent);
+}
+
+.slotItem.disabled .slotDetails {
+  opacity: 0.6;
+}
+
+.slotDetails {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-6);
+  font-size: 0.9375rem;
+}
+
+.timeRange,
+.timezone {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  color: var(--foreground);
+}
+
+.timeRange svg,
+.timezone svg {
+  color: var(--muted-foreground);
+}
+
+.slotActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-12) 0;
+  color: var(--muted-foreground);
+  gap: var(--spacing-4);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.errorMessage {
+  font-family: var(--font-family-monospace);
+  font-size: 0.875rem;
+  color: var(--error);
+  background-color: color-mix(in srgb, var(--error) 10%, transparent);
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius);
+  max-width: 80%;
+}
+
+/* Form styles */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-4);
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.formField label {
+  font-weight: 500;
+}
+
+.timeFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-4);
+}
+
+.switchField {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-2) 0;
+}
+
+.switchField label {
+  font-weight: 500;
+}
+
+.error {
+  color: var(--error);
+  font-size: 0.875rem;
+}

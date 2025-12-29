@@ -1,0 +1,71 @@
+.container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  padding: var(--spacing-2);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  color: var(--muted-foreground);
+  transition: background-color var(--animation-duration-fast) ease, color var(--animation-duration-fast) ease;
+}
+
+.container:hover:not(:disabled) {
+  background-color: var(--muted);
+  color: var(--foreground);
+}
+
+.container:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.container:disabled {
+  cursor: default;
+  color: var(--muted-foreground);
+}
+
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 var(--spacing-1);
+  border-radius: var(--radius-full);
+  background-color: var(--error);
+  color: var(--error-foreground);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  border: 2px solid var(--background);
+  transform-origin: center;
+}
+
+.pulse {
+  animation: pulse-animation 0.7s ease-out;
+}
+
+@keyframes pulse-animation {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--error) 40%, transparent);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--error) 0%, transparent);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--error) 0%, transparent);
+  }
+}

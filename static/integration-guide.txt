@@ -1,0 +1,15 @@
+PrimeCaves Chatbot - Programmatic Integration Guide
+===================================================
+
+This guide explains how to integrate the PrimeCaves Chatbot into your application and programmatically trigger it to report errors or send specific messages.
+
+---------------------------------------------------
+
+1. Quick Start
+----------------
+
+Getting the chatbot widget running on your site is a simple two-step process.
+
+### Step 1: Add the SDK Script
+
+Place the following script tag just before the closing `</body>` tag on your page.

@@ -1,0 +1,502 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  border-bottom: 1px solid var(--border);
+  background-color: var(--surface);
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
+  flex-shrink: 0;
+  min-height: 3.5rem;
+  transition: min-height var(--animation-duration-normal) ease;
+}
+
+/* Left Section */
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.backButton {
+  display: none;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  flex-shrink: 0;
+}
+
+.userInfo {
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.headerTitle {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.headerSubtitle {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.refreshButton {
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  flex-shrink: 0;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Center Section */
+.centerSection {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0 var(--spacing-3);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+
+.aiToggleInline {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  white-space: nowrap;
+}
+
+.aiToggleLabel {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.statusBadge {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.125rem var(--spacing-2);
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.statusDefault {
+  background-color: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.statusOn {
+  background-color: color-mix(in srgb, var(--success) 15%, transparent);
+  color: var(--success);
+}
+
+.statusOff {
+  background-color: color-mix(in srgb, var(--error) 15%, transparent);
+  color: var(--error);
+}
+
+.aiSwitch {
+  flex-shrink: 0;
+}
+
+.resetLink {
+  all: unset;
+  font-size: 0.6875rem;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color var(--animation-duration-fast);
+  flex-shrink: 0;
+}
+
+.resetLink:hover:not(:disabled) {
+  color: var(--foreground);
+}
+
+.resetLink:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Right Section */
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.chatStatusBadge {
+  text-transform: capitalize;
+  font-size: 0.75rem;
+  padding: 0.25rem var(--spacing-2);
+  flex-shrink: 0;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-shrink: 0;
+}
+
+  .statusButton {
+    font-size: 0.8125rem;
+    padding: 0.375rem var(--spacing-3);
+    height: auto;
+    min-height: 2rem;
+  }
+
+  .iconButton {
+    min-width: 2rem;
+    min-height: 2rem;
+    padding: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.deleteButton {
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  flex-shrink: 0;
+}
+
+/* Collapse toggle button - hidden by default, shown only on mobile */
+.collapseToggle {
+  display: none;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Hidden state for collapsible sections */
+.hidden {
+  display: none !important;
+}
+
+/* Tablet responsiveness (768px - 900px) */
+@media (max-width: 900px) {
+  .backButton {
+    display: inline-flex;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    min-height: auto;
+  }
+
+  .leftSection {
+    order: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .rightSection {
+    order: 2;
+    margin-left: 0;
+    flex: 0 1 auto;
+  }
+
+  .centerSection {
+    order: 3;
+    width: 100%;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    padding: var(--spacing-2) 0;
+    justify-content: center;
+    flex: 1 1 100%;
+  }
+}
+
+/* Mobile responsiveness (under 768px) */
+@media (max-width: 768px) {
+  .header {
+    padding: var(--spacing-2);
+    gap: var(--spacing-1);
+    min-height: 2.5rem;
+  }
+
+  /* Show collapse toggle on mobile */
+  .collapseToggle {
+    display: inline-flex;
+  }
+
+  /* Collapsed state adjustments */
+  .header.collapsed {
+    min-height: 2.5rem;
+  }
+
+  .header.collapsed .leftSection {
+    flex: 1 1 auto;
+  }
+
+  .leftSection {
+    flex: 1 1 100%;
+    order: 1;
+    min-width: 0;
+    gap: var(--spacing-1);
+  }
+
+  .centerSection {
+    order: 2;
+    flex: 1 1 100%;
+    padding: var(--spacing-1) 0;
+    border-top-width: 1px;
+  }
+
+  .rightSection {
+    order: 3;
+    flex: 1 1 100%;
+    margin-left: 0;
+    flex-wrap: nowrap;
+    gap: var(--spacing-1);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: var(--spacing-1);
+  }
+
+  .rightSection::-webkit-scrollbar {
+    height: 0.25rem;
+  }
+
+  .rightSection::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .rightSection::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: var(--radius-full);
+  }
+
+  .headerTitle {
+    font-size: 0.8125rem;
+    line-height: 1.2;
+  }
+
+  .headerSubtitle {
+    font-size: 0.625rem;
+    line-height: 1.2;
+  }
+
+  .aiToggleLabel {
+    font-size: 0.6875rem;
+  }
+
+  .statusBadge {
+    font-size: 0.5625rem;
+    padding: 0.125rem var(--spacing-1);
+  }
+
+  .resetLink {
+    font-size: 0.5625rem;
+  }
+
+  /* Increase touch targets for mobile (44x44px minimum) */
+  .backButton {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem;
+  }
+
+  .refreshButton {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem;
+  }
+
+  .collapseToggle {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem;
+  }
+
+  .iconButton {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem;
+  }
+
+  .deleteButton {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem;
+  }
+
+  .statusButton {
+    font-size: 0.6875rem;
+    padding: 0.25rem var(--spacing-2);
+    min-height: 2.75rem;
+  }
+
+  .chatStatusBadge {
+    font-size: 0.625rem;
+    padding: 0.25rem var(--spacing-1);
+    min-height: 1.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .actionButtons {
+    gap: var(--spacing-1);
+    flex-wrap: nowrap;
+    width: auto;
+    min-width: min-content;
+  }
+
+  .aiToggleInline {
+    gap: var(--spacing-1);
+  }
+}
+
+/* Small mobile responsiveness (under 430px) */
+@media (max-width: 430px) {
+  .header {
+    padding: 0.375rem;
+    gap: 0.25rem;
+    min-height: 2rem;
+  }
+
+  .header.collapsed {
+    min-height: 2rem;
+  }
+
+  .leftSection {
+    gap: 0.25rem;
+  }
+
+  .centerSection {
+    padding: 0.25rem 0;
+  }
+
+  .aiToggleInline {
+    gap: 0.25rem;
+    font-size: 0.625rem;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .aiToggleLabel {
+    font-size: 0.625rem;
+    line-height: 1.1;
+  }
+
+  .statusBadge {
+    font-size: 0.5rem;
+    padding: 0.125rem 0.25rem;
+    line-height: 1.1;
+  }
+
+  .resetLink {
+    font-size: 0.5rem;
+    line-height: 1.1;
+  }
+
+  .rightSection {
+    gap: 0.25rem;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .rightSection::-webkit-scrollbar {
+    height: 0.25rem;
+  }
+
+  .rightSection::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .rightSection::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: var(--radius-full);
+  }
+
+  .chatStatusBadge {
+    font-size: 0.5625rem;
+    padding: 0.125rem 0.25rem;
+    min-height: 1.25rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .statusButton {
+    flex: 0 0 auto;
+    min-width: fit-content;
+    font-size: 0.625rem;
+    padding: 0.2rem 0.375rem;
+    min-height: 2.75rem;
+  }
+
+  .actionButtons {
+    gap: 0.25rem;
+    width: auto;
+    flex-wrap: nowrap;
+  }
+
+  .headerTitle {
+    font-size: 0.75rem;
+    line-height: 1.1;
+  }
+
+  .headerSubtitle {
+    font-size: 0.5625rem;
+    line-height: 1.1;
+  }
+
+  /* Maintain 44x44px touch targets even on small screens */
+  .backButton,
+  .refreshButton,
+  .iconButton,
+  .deleteButton,
+  .collapseToggle {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem;
+  }
+}
+
+/* Desktop - always hide collapse toggle */
+@media (min-width: 769px) {
+  .collapseToggle {
+    display: none !important;
+  }
+
+  .hidden {
+    display: flex !important;
+  }
+}

@@ -1,0 +1,632 @@
+/* Floating Button Container */
+.floatingButtonContainer {
+  position: fixed;
+  bottom: 6rem;
+  z-index: var(--z-content-high);
+}
+
+.floatingButtonContainerEmbedded {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+}
+
+/* Floating Button - Always Visible */
+.floatingButton {
+  position: relative;
+  background: linear-gradient(135deg, #dc1928 0%, #b8161f 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  width: 3.75rem;
+  height: 3.75rem;
+  box-shadow: 0 8px 24px rgba(220, 25, 40, 0.35), 
+              0 4px 12px rgba(0, 0, 0, 0.15),
+              0 0 0 0 rgba(220, 25, 40, 0.4);
+  transition: transform var(--animation-duration-normal) cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow var(--animation-duration-normal) cubic-bezier(0.4, 0, 0.2, 1),
+    background var(--animation-duration-fast) ease;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(220, 25, 40, 0.35), 
+                0 4px 12px rgba(0, 0, 0, 0.15),
+                0 0 0 0 rgba(220, 25, 40, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 24px rgba(220, 25, 40, 0.35), 
+                0 4px 12px rgba(0, 0, 0, 0.15),
+                0 0 0 12px rgba(220, 25, 40, 0);
+  }
+}
+
+/* Unread Badge */
+.unreadBadge {
+  position: absolute;
+  top: -4px;
+  min-width: 1.375rem;
+  height: 1.375rem;
+  padding: 0 var(--spacing-1);
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4),
+              0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: badgePulse 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+.unreadBadgeRight {
+  right: -4px;
+}
+
+.unreadBadgeLeft {
+  left: -4px;
+}
+
+.floatingButtonContainerEmbedded .unreadBadge {
+  position: absolute;
+  top: calc(50% - 1.875rem - 4px);
+}
+
+.floatingButtonContainerEmbedded .unreadBadgeRight {
+  right: calc(50% - 1.875rem - 4px);
+}
+
+.floatingButtonContainerEmbedded .unreadBadgeLeft {
+  left: calc(50% - 1.875rem - 4px);
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4),
+                0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(255, 68, 68, 0.6),
+                0 3px 6px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.floatingButtonContainer.floatingButtonRight {
+  right: var(--spacing-8);
+}
+
+.floatingButtonContainer.floatingButtonLeft {
+  left: var(--spacing-8);
+}
+
+.floatingButtonRight {
+  /* Position class for button - no positioning needed as container handles it */
+}
+
+.floatingButtonLeft {
+  /* Position class for button - no positioning needed as container handles it */
+}
+
+.floatingButtonEmbedded {
+  /* Centered in the iframe container */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: none;
+}
+
+.floatingButton:hover {
+  background: linear-gradient(135deg, #b8161f 0%, #9a1219 100%);
+  box-shadow: 0 16px 40px rgba(220, 25, 40, 0.45), 
+              0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1) translateY(-2px);
+}
+
+.floatingButtonEmbedded:hover {
+  background: linear-gradient(135deg, #b8161f 0%, #9a1219 100%);
+  box-shadow: 0 16px 40px rgba(220, 25, 40, 0.45), 
+              0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.floatingButton:active {
+  transform: scale(1.05) translateY(0);
+}
+
+.floatingButtonEmbedded:active {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.floatingButton svg {
+  width: 1.875rem;
+  height: 1.875rem;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Chat Window - Corner Tab */
+.chatWindow {
+  position: fixed;
+  width: 420px;
+  height: 640px;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  bottom: 6rem;
+  background: linear-gradient(to bottom, var(--surface), color-mix(in srgb, var(--surface) 98%, var(--muted)));
+  border-radius: calc(var(--radius-lg) + 4px);
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15), 
+              0 12px 32px rgba(0, 0, 0, 0.1),
+              0 4px 12px rgba(0, 0, 0, 0.05);
+  z-index: var(--z-content-high);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--animation-duration-normal) cubic-bezier(0.4, 0, 0.2, 1),
+    opacity var(--animation-duration-normal) cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow var(--animation-duration-normal) ease;
+  backdrop-filter: blur(8px);
+}
+
+.chatWindowRight {
+  right: var(--spacing-8);
+}
+
+.chatWindowLeft {
+  left: var(--spacing-8);
+}
+
+.chatWindowEmbedded {
+  /* Fill the entire iframe */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  border: 1px solid var(--border);
+  backdrop-filter: none;
+}
+
+.chatWindowOpen {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.chatWindowClosed {
+  transform: translateY(calc(100% + var(--spacing-8))) scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Embedded mode overrides */
+.chatWindowEmbedded.chatWindowOpen {
+  transform: translateY(0) scale(1);
+}
+
+.chatWindowEmbedded.chatWindowClosed {
+  transform: translateY(0);
+  display: none;
+}
+
+/* Chat Header */
+.chatHeader {
+  padding: var(--spacing-8) var(--spacing-6) var(--spacing-6);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+  background: linear-gradient(135deg, 
+    color-mix(in srgb, var(--primary) 8%, var(--surface)) 0%, 
+    color-mix(in srgb, var(--primary) 4%, var(--surface)) 50%,
+    color-mix(in srgb, var(--surface) 98%, var(--muted)) 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04),
+              0 2px 6px rgba(0, 0, 0, 0.03),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.chatHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--primary) 30%,
+    color-mix(in srgb, var(--primary) 80%, var(--secondary)) 50%,
+    var(--primary) 70%,
+    transparent 100%);
+  opacity: 0.8;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.chatHeader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 200%;
+  }
+}
+
+.chatHeaderEmbedded {
+  padding: var(--spacing-6) var(--spacing-6) var(--spacing-5);
+}
+
+.chatHeaderContent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+}
+
+.chatHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex: 1;
+  min-width: 0;
+}
+
+.chatAvatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  overflow: hidden;
+  background: linear-gradient(135deg, 
+    color-mix(in srgb, var(--primary) 10%, var(--muted)) 0%, 
+    color-mix(in srgb, var(--primary) 5%, var(--muted)) 100%);
+  border: 2px solid color-mix(in srgb, var(--border) 60%, transparent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08),
+              0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: transform var(--animation-duration-normal) ease,
+              box-shadow var(--animation-duration-normal) ease;
+}
+
+.chatAvatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12),
+              0 3px 8px rgba(0, 0, 0, 0.06);
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary) 0%, color-mix(in srgb, var(--primary) 85%, var(--secondary)) 100%);
+  color: var(--primary-foreground);
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.chatTitleWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.chatTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chatSubtitle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.statusIndicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--success) 0%, color-mix(in srgb, var(--success) 80%, transparent) 100%);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--success) 20%, transparent),
+              0 2px 6px color-mix(in srgb, var(--success) 40%, transparent);
+  animation: statusPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+}
+
+.chatHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.headerButton {
+  color: var(--muted-foreground);
+  transition: all var(--animation-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius);
+  background: transparent;
+  position: relative;
+}
+
+.headerButton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, 
+    color-mix(in srgb, var(--muted) 80%, transparent) 0%, 
+    color-mix(in srgb, var(--muted) 60%, transparent) 100%);
+  opacity: 0;
+  transition: opacity var(--animation-duration-fast) ease;
+}
+
+.headerButton:hover {
+  color: var(--foreground);
+  transform: scale(1.08);
+}
+
+.headerButton:hover::before {
+  opacity: 1;
+}
+
+.headerButton:active {
+  transform: scale(0.98);
+}
+
+.chatDescription {
+  font-size: 0.9375rem;
+  color: var(--muted-foreground);
+  margin: 0;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  opacity: 0.9;
+}
+
+.chatDescriptionEmbedded {
+  max-width: 48ch;
+}
+
+/* Chat Content */
+.chatContent {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: linear-gradient(to bottom, 
+    color-mix(in srgb, var(--surface) 99%, var(--muted)) 0%,
+    color-mix(in srgb, var(--surface) 97%, var(--muted)) 100%);
+}
+
+.chatContentEmbedded {
+  padding: 0 var(--spacing-6) var(--spacing-6);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    hsl(0 0% 0% / 0.5) 0%, 
+    hsl(0 0% 0% / 0.6) 100%);
+  backdrop-filter: blur(4px);
+  z-index: calc(var(--z-content-high) - 1);
+  animation: fadeIn var(--animation-duration-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+}
+
+/* Loading Container */
+.loadingContainer {
+  padding: var(--spacing-8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .chatWindow {
+    width: calc(100vw - 2rem);
+    height: calc(100vh - 2rem);
+    bottom: 1rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .chatWindowRight {
+    right: 1rem;
+  }
+
+  .chatWindowLeft {
+    left: 1rem;
+  }
+
+  .floatingButton {
+    bottom: 5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .floatingButtonRight {
+    right: var(--spacing-4);
+  }
+
+  .floatingButtonLeft {
+    left: var(--spacing-4);
+  }
+
+  .floatingButton svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  /* Reduce header padding on mobile */
+  .chatHeader {
+    padding: var(--spacing-4) var(--spacing-4) var(--spacing-3);
+    gap: var(--spacing-2);
+  }
+
+  .chatHeaderEmbedded {
+    padding: var(--spacing-3) var(--spacing-4) var(--spacing-3);
+  }
+
+  /* Reduce avatar size on mobile */
+  .chatAvatar {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  /* Reduce title size on mobile */
+  .chatTitle {
+    font-size: 1rem;
+  }
+
+  /* Reduce subtitle size on mobile */
+  .chatSubtitle {
+    font-size: 0.75rem;
+  }
+
+  /* Reduce gap in header content */
+  .chatHeaderLeft {
+    gap: var(--spacing-2);
+  }
+
+  /* Reduce description size on mobile */
+  .chatDescription {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 430px) {
+  /* Even more aggressive space saving for smaller screens */
+  .chatHeader {
+    padding: var(--spacing-3) var(--spacing-3) var(--spacing-2);
+    gap: var(--spacing-1);
+  }
+
+  .chatHeaderEmbedded {
+    padding: var(--spacing-2) var(--spacing-3) var(--spacing-2);
+  }
+
+  /* Smaller avatar on very small screens */
+  .chatAvatar {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .avatarFallback {
+    font-size: 0.875rem;
+  }
+
+  /* Smaller title on very small screens */
+  .chatTitle {
+    font-size: 0.9375rem;
+  }
+
+  /* Smaller subtitle on very small screens */
+  .chatSubtitle {
+    font-size: 0.6875rem;
+    gap: 0.125rem;
+  }
+
+  .statusIndicator {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Reduce gap in header content */
+  .chatHeaderLeft {
+    gap: 0.5rem;
+  }
+
+  /* Smaller description on very small screens */
+  .chatDescription {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+
+  /* Smaller header buttons */
+  .headerButton {
+    padding: var(--spacing-1);
+  }
+}
