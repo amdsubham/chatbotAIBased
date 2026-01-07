@@ -20,7 +20,8 @@ async function restoreDatabase() {
     // Read the backup file
     const backupFile = 'flyio_data_backup_1767006414002.json';
     console.log(`📂 Reading backup file: ${backupFile}`);
-    const backup = JSON.parse(fs.readFileSync(backupFile, 'utf8'));
+    const backupPath = backupFile.includes('/') ? backupFile : `backup/${backupFile}`;
+    const backup = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
 
     console.log(`📅 Backup timestamp: ${backup.timestamp}`);
     console.log(`📊 Tables to restore: ${Object.keys(backup.tables).length}\n`);
