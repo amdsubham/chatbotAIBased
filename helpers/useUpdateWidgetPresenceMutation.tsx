@@ -9,6 +9,9 @@ export const useUpdateWidgetPresenceMutation = (apiBaseUrl?: string) => {
     onSuccess: (_data, variables) => {
       // Invalidate the specific chat query to get the latest presence data
       queryClient.invalidateQueries({ queryKey: ['chat', variables.chatId] });
+
+      // Invalidate the chats list query so admin dashboard shows updated online status immediately
+      queryClient.invalidateQueries({ queryKey: ['chats'] });
     },
     onError: (error) => {
       // Per requirements, this is a silent background operation.

@@ -82,12 +82,18 @@ export const ChatWidget = ({ config, onOpenChange, isEmbedded = false }: ChatWid
   const handledErrorRef = useRef<string | null>(null);
   const autoCreatedChatRef = useRef(false);
   const initialMessageSentRef = useRef(false);
+  const isOpenRef = useRef(isOpen);
   const notificationAudio = useMemo(() => {
     const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3");
     audio.volume = 0.5;
     return audio;
   }, []);
   const previousUnreadCountRef = useRef<number>(0);
+
+  // Keep isOpenRef in sync with isOpen state
+  useEffect(() => {
+    isOpenRef.current = isOpen;
+  }, [isOpen]);
 
   // Load lastSeenMessageCount from localStorage when activeChatId changes
   useEffect(() => {
@@ -266,14 +272,15 @@ export const ChatWidget = ({ config, onOpenChange, isEmbedded = false }: ChatWid
     }
 
     console.log('[ChatWidget] Starting periodic widget presence updates for chat', activeChatId);
-    
+
     // Update presence every 60 seconds to keep widgetLastSeenAt fresh
     // This runs regardless of isOpen state so admins can see users are on the page
+    // Use isOpenRef.current to avoid stale closure issues
     const intervalId = setInterval(() => {
-      console.log('[ChatWidget] Periodic widget presence update - isOpen:', isOpen);
+      console.log('[ChatWidget] Periodic widget presence update - isOpen:', isOpenRef.current);
       updateWidgetPresenceMutation.mutate({
         chatId: activeChatId,
-        isOpen: isOpen,
+        isOpen: isOpenRef.current,
       });
     }, 60000); // 60 seconds
 
@@ -281,6 +288,19 @@ export const ChatWidget = ({ config, onOpenChange, isEmbedded = false }: ChatWid
     return () => {
       console.log('[ChatWidget] Stopping periodic widget presence updates');
       clearInterval(intervalId);
+    };
+  }, [activeChatId]);
+
+  // Cleanup: Mark widget as offline when component unmounts
+  useEffect(() => {
+    return () => {
+      if (activeChatId) {
+        console.log('[ChatWidget] Component unmounting, marking widget as offline');
+        updateWidgetPresenceMutation.mutate({
+          chatId: activeChatId,
+          isOpen: false,
+        });
+      }
     };
   }, [activeChatId]);
 
