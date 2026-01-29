@@ -9,10 +9,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "./DropdownMenu";
-import { ArrowLeft, RefreshCw, Trash2, Download, Mail, BookPlus, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowLeft, RefreshCw, Trash2, Download, Mail, BookPlus, ChevronDown, ChevronUp, Maximize2 } from "lucide-react";
 import { AddQAFromChatDialog } from "./AddQAFromChatDialog";
 import { useUpdateChatAiSettingMutation } from "../helpers/useUpdateChatAiSettingMutation";
 import { useSettingsQuery } from "../helpers/useSettingsQuery";
+import { useMerchantUserByEmail } from "../helpers/useMerchantUsersQuery";
 import styles from "./ChatDetailHeader.module.css";
 
 interface ChatDetailHeaderProps {
@@ -36,6 +37,7 @@ interface ChatDetailHeaderProps {
   onUpdateStatus: (status: "active" | "resolved" | "unresolved") => void;
   onExport: (format: "pdf" | "json" | "txt") => void;
   onSendEmailReminder: () => void;
+  onExpandDetails: () => void;
 }
 
 export const ChatDetailHeader = ({
@@ -52,9 +54,11 @@ export const ChatDetailHeader = ({
   onUpdateStatus,
   onExport,
   onSendEmailReminder,
+  onExpandDetails,
 }: ChatDetailHeaderProps) => {
   const updateAiSettingMutation = useUpdateChatAiSettingMutation();
   const { data: settings } = useSettingsQuery();
+  const { data: merchantUser, isLoading: merchantUserLoading } = useMerchantUserByEmail(chat.merchantEmail);
 
   // Collapse state for mobile
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -123,7 +127,17 @@ export const ChatDetailHeader = ({
           <ArrowLeft size={18} />
         </Button>
         <div className={styles.userInfo}>
-          <h3 className={styles.headerTitle}>{chat.merchantEmail}</h3>
+          <div className={styles.emailWithBadge}>
+            <h3 className={styles.headerTitle}>{chat.merchantEmail}</h3>
+            {merchantUser && (
+              <Badge
+                variant={merchantUser.billingPlan === "Pro" ? "default" : "secondary"}
+                className={styles.planBadge}
+              >
+                {merchantUser.billingPlan || "Free"}
+              </Badge>
+            )}
+          </div>
           <p className={styles.headerSubtitle}>{chat.shopName || "No shop name"}</p>
         </div>
         <Tooltip>
@@ -266,9 +280,22 @@ export const ChatDetailHeader = ({
           </DropdownMenu>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button 
-                variant="destructive" 
-                size="icon" 
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={onExpandDetails}
+                className={styles.expandButton}
+              >
+                <Maximize2 size={16} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>View merchant details</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="destructive"
+                size="icon"
                 onClick={onDelete}
                 disabled={deletePending}
                 className={styles.deleteButton}

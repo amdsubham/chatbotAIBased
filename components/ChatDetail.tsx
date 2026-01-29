@@ -21,6 +21,8 @@ import { openImageInNewTab } from "../helpers/openImageInNewTab";
 import { TypingIndicator } from "./TypingIndicator";
 import { ReplySuggestionsPanel } from "./ReplySuggestionsPanel";
 import { ChatDetailHeader } from "./ChatDetailHeader";
+import { MerchantDetailsPanel } from "./MerchantDetailsPanel";
+import { useMerchantUserByEmail } from "../helpers/useMerchantUsersQuery";
 import {
   Dialog,
   DialogContent,
@@ -54,6 +56,7 @@ export const ChatDetail = ({ chatId, onClose }: ChatDetailProps) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [messageToDelete, setMessageToDelete] = useState<{ id: number; chatId: number } | null>(null);
   const [isAutoScrollLocked, setIsAutoScrollLocked] = useState(false);
+  const [showMerchantDetails, setShowMerchantDetails] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -79,6 +82,7 @@ export const ChatDetail = ({ chatId, onClose }: ChatDetailProps) => {
     expirationSeconds: 5,
     enabled: !!chatId,
   });
+  const { data: merchantUser, isLoading: merchantUserLoading } = useMerchantUserByEmail(chat?.merchantEmail);
   const lastTypingUpdateRef = useRef<number>(0);
   const hasMarkedViewedRef = useRef<boolean>(false);
 
@@ -333,6 +337,7 @@ export const ChatDetail = ({ chatId, onClose }: ChatDetailProps) => {
         onUpdateStatus={(status) => updateStatusMutation.mutate({ chatId, status })}
         onExport={(format) => exportMutation.mutate({ chatId, format })}
         onSendEmailReminder={() => sendEmailNotificationMutation.mutate({ chatId })}
+        onExpandDetails={() => setShowMerchantDetails(true)}
       />
 
       {chat.rating !== null && (
@@ -619,6 +624,14 @@ export const ChatDetail = ({ chatId, onClose }: ChatDetailProps) => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {showMerchantDetails && (
+        <MerchantDetailsPanel
+          user={merchantUser}
+          isLoading={merchantUserLoading}
+          onClose={() => setShowMerchantDetails(false)}
+        />
+      )}
     </div>
   );
 };

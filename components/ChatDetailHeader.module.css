@@ -33,6 +33,13 @@
   flex-shrink: 1;
 }
 
+.emailWithBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  min-width: 0;
+}
+
 .headerTitle {
   font-weight: 600;
   font-size: 0.9375rem;
@@ -42,6 +49,17 @@
   text-overflow: ellipsis;
   line-height: 1.3;
   margin: 0;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.planBadge {
+  font-size: 0.625rem;
+  padding: 0.125rem var(--spacing-1-5);
+  flex-shrink: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
 .headerSubtitle {
@@ -183,6 +201,12 @@
     align-items: center;
     justify-content: center;
   }
+
+.expandButton {
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  flex-shrink: 0;
+}
 
 .deleteButton {
   min-width: 2.25rem;
