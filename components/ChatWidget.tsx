@@ -9,6 +9,7 @@ import { useCreateChatMutation } from "../helpers/useCreateChatMutation";
 import { useSendMessageMutation } from "../helpers/useSendMessageMutation";
 import { useUpdateWidgetPresenceMutation } from "../helpers/useUpdateWidgetPresenceMutation";
 import { useErrorHandler } from "../helpers/useErrorHandler";
+import superjson from 'superjson';
 import { formatErrorContext } from "../helpers/formatErrorContext";
 import { useChatQuery } from "../helpers/useChatQuery";
 import { useQueryClient } from "@tanstack/react-query";
@@ -291,18 +292,43 @@ export const ChatWidget = ({ config, onOpenChange, isEmbedded = false }: ChatWid
     };
   }, [activeChatId]);
 
-  // Cleanup: Mark widget as offline when component unmounts
+  // Cleanup: Mark widget as offline when page unloads (more reliable than component unmount)
   useEffect(() => {
-    return () => {
+    const handleBeforeUnload = () => {
       if (activeChatId) {
-        console.log('[ChatWidget] Component unmounting, marking widget as offline');
-        updateWidgetPresenceMutation.mutate({
-          chatId: activeChatId,
-          isOpen: false,
-        });
+        console.log('[ChatWidget] Page unloading, marking widget as offline');
+
+        // Use sendBeacon for reliable delivery during page unload
+        // This is more reliable than fetch/XHR during unload events
+        const baseUrl = apiBaseUrl || '';
+        // IMPORTANT: Use superjson.stringify to match the endpoint's expected format
+        const data = superjson.stringify({ chatId: activeChatId, isOpen: false });
+
+        try {
+          // Try sendBeacon first (most reliable)
+          const blob = new Blob([data], { type: 'application/json' });
+          navigator.sendBeacon(`${baseUrl}/_api/chat/widget-presence`, blob);
+        } catch (error) {
+          console.error('[ChatWidget] Error sending beacon:', error);
+          // Fallback to synchronous XHR if sendBeacon fails
+          try {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `${baseUrl}/_api/chat/widget-presence`, false); // false = synchronous
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(data);
+          } catch (xhrError) {
+            console.error('[ChatWidget] Error sending sync XHR:', xhrError);
+          }
+        }
       }
     };
-  }, [activeChatId]);
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [activeChatId, apiBaseUrl]);
 
   // Watch for new errors and auto-open dialog
   useEffect(() => {
