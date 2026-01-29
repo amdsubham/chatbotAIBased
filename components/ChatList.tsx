@@ -63,7 +63,9 @@ export const ChatList = ({ selectedChatId, onSelectChat }: ChatListProps) => {
   });
 
   const isWidgetOnline = (chat: any) => {
-    if (!chat.widgetOpen || !chat.widgetLastSeenAt) {
+    // Check if merchant has been seen recently (within last 2 minutes)
+    // This tracks page presence, not whether widget is open/minimized
+    if (!chat.widgetLastSeenAt) {
       return false;
     }
     const twoMinutesAgo = Date.now() - 2 * 60 * 1000;

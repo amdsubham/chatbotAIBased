@@ -83,18 +83,12 @@ export const ChatWidget = ({ config, onOpenChange, isEmbedded = false }: ChatWid
   const handledErrorRef = useRef<string | null>(null);
   const autoCreatedChatRef = useRef(false);
   const initialMessageSentRef = useRef(false);
-  const isOpenRef = useRef(isOpen);
   const notificationAudio = useMemo(() => {
     const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3");
     audio.volume = 0.5;
     return audio;
   }, []);
   const previousUnreadCountRef = useRef<number>(0);
-
-  // Keep isOpenRef in sync with isOpen state
-  useEffect(() => {
-    isOpenRef.current = isOpen;
-  }, [isOpen]);
 
   // Load lastSeenMessageCount from localStorage when activeChatId changes
   useEffect(() => {
@@ -256,38 +250,38 @@ export const ChatWidget = ({ config, onOpenChange, isEmbedded = false }: ChatWid
     }
   }, [activeChatId, initialMessage, chatData, settings, initialErrorContext, queryClient, aiGenerateResponseMutation, sendMessageMutation]);
 
-  // Track widget presence when isOpen or activeChatId changes
+  // Track page presence when chat is created (not based on widget open/close state)
   useEffect(() => {
     if (activeChatId) {
+      console.log('[ChatWidget] Chat created, marking merchant as online (page loaded)');
       updateWidgetPresenceMutation.mutate({
         chatId: activeChatId,
-        isOpen: isOpen,
+        isOpen: true, // Always true while page is loaded
       });
     }
-  }, [isOpen, activeChatId]);
+  }, [activeChatId]);
 
-  // Periodic polling to keep widget presence fresh (runs when chat exists, regardless of open/minimized state)
+  // Periodic polling to keep page presence fresh (runs when chat exists)
   useEffect(() => {
     if (!activeChatId) {
       return;
     }
 
-    console.log('[ChatWidget] Starting periodic widget presence updates for chat', activeChatId);
+    console.log('[ChatWidget] Starting periodic page presence updates for chat', activeChatId);
 
     // Update presence every 60 seconds to keep widgetLastSeenAt fresh
-    // This runs regardless of isOpen state so admins can see users are on the page
-    // Use isOpenRef.current to avoid stale closure issues
+    // Always send isOpen: true because we're tracking page presence, not widget open/close state
     const intervalId = setInterval(() => {
-      console.log('[ChatWidget] Periodic widget presence update - isOpen:', isOpenRef.current);
+      console.log('[ChatWidget] Periodic page presence update - merchant is still on page');
       updateWidgetPresenceMutation.mutate({
         chatId: activeChatId,
-        isOpen: isOpenRef.current,
+        isOpen: true, // Always true - we're tracking page presence
       });
     }, 60000); // 60 seconds
 
     // Cleanup interval on unmount or when activeChatId changes
     return () => {
-      console.log('[ChatWidget] Stopping periodic widget presence updates');
+      console.log('[ChatWidget] Stopping periodic page presence updates');
       clearInterval(intervalId);
     };
   }, [activeChatId]);
