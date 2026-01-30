@@ -14,29 +14,35 @@ interface MerchantDetailsPanelProps {
 export const MerchantDetailsPanel = ({ user, isLoading, onClose }: MerchantDetailsPanelProps) => {
   if (isLoading) {
     return (
-      <div className={styles.panel}>
-        <div className={styles.header}>
-          <h3 className={styles.title}>Merchant Details</h3>
-          <Button variant="ghost" size="icon-sm" onClick={onClose}>
-            <X size={18} />
-          </Button>
+      <>
+        <div className={styles.overlay} onClick={onClose} aria-hidden="true" />
+        <div className={styles.panel} role="dialog" aria-labelledby="merchant-details-title">
+          <div className={styles.header}>
+            <h3 className={styles.title} id="merchant-details-title">Merchant Details</h3>
+            <Button variant="ghost" size="icon-sm" onClick={onClose} aria-label="Close merchant details panel">
+              <X size={20} />
+            </Button>
+          </div>
+          <div className={styles.loading}>Loading merchant details...</div>
         </div>
-        <div className={styles.loading}>Loading merchant details...</div>
-      </div>
+      </>
     );
   }
 
   if (!user) {
     return (
-      <div className={styles.panel}>
-        <div className={styles.header}>
-          <h3 className={styles.title}>Merchant Details</h3>
-          <Button variant="ghost" size="icon-sm" onClick={onClose}>
-            <X size={18} />
-          </Button>
+      <>
+        <div className={styles.overlay} onClick={onClose} aria-hidden="true" />
+        <div className={styles.panel} role="dialog" aria-labelledby="merchant-details-title">
+          <div className={styles.header}>
+            <h3 className={styles.title} id="merchant-details-title">Merchant Details</h3>
+            <Button variant="ghost" size="icon-sm" onClick={onClose} aria-label="Close merchant details panel">
+              <X size={20} />
+            </Button>
+          </div>
+          <div className={styles.noData}>No merchant details found for this email.</div>
         </div>
-        <div className={styles.noData}>No merchant details found for this email.</div>
-      </div>
+      </>
     );
   }
 
@@ -75,15 +81,24 @@ export const MerchantDetailsPanel = ({ user, isLoading, onClose }: MerchantDetai
   };
 
   return (
-    <div className={styles.panel}>
-      <div className={styles.header}>
-        <h3 className={styles.title}>Merchant Details</h3>
-        <Button variant="ghost" size="icon-sm" onClick={onClose}>
-          <X size={18} />
-        </Button>
-      </div>
+    <>
+      {/* Overlay/backdrop - clicking it closes the panel */}
+      <div className={styles.overlay} onClick={onClose} aria-hidden="true" />
 
-      <div className={styles.content}>
+      <div className={styles.panel} role="dialog" aria-labelledby="merchant-details-title">
+        <div className={styles.header}>
+          <h3 className={styles.title} id="merchant-details-title">Merchant Details</h3>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={onClose}
+            aria-label="Close merchant details panel"
+          >
+            <X size={20} />
+          </Button>
+        </div>
+
+        <div className={styles.content}>
         {/* Account Information */}
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
@@ -274,5 +289,6 @@ export const MerchantDetailsPanel = ({ user, isLoading, onClose }: MerchantDetai
         </section>
       </div>
     </div>
+    </>
   );
 };
