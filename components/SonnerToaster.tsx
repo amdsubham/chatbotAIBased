@@ -12,6 +12,7 @@ export const SonnerToaster = ({ className, ...props }: ToasterProps) => {
   return (
     <Sonner
       className={`${styles.toaster} ${className ?? ""}`}
+      closeButton
       toastOptions={{
         unstyled: true,
         classNames: {
