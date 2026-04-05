@@ -121,9 +121,19 @@ export interface Users {
   role: Generated<string>;
 }
 
+export interface DeviceTokens {
+  id: Generated<number>;
+  userId: number;
+  token: string;
+  platform: Generated<string>;
+  createdAt: Generated<Timestamp>;
+  updatedAt: Generated<Timestamp>;
+}
+
 export interface DB {
   availabilitySlots: AvailabilitySlots;
   chats: Chats;
+  deviceTokens: DeviceTokens;
   knowledgeBase: KnowledgeBase;
   loginAttempts: LoginAttempts;
   messages: Messages;

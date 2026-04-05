@@ -2,6 +2,7 @@ import { db } from "../../helpers/db";
 import { schema, OutputType } from "./send_POST.schema";
 import superjson from 'superjson';
 import { sendTelegramNotification } from "../../helpers/sendTelegramNotification";
+import { sendPushNotification } from "../../helpers/sendPushNotification";
 
 export async function handle(request: Request) {
   // Handle OPTIONS preflight request
@@ -39,6 +40,16 @@ export async function handle(request: Request) {
           shopDomain: chat.shopDomain,
         }).catch(error => {
           console.error('Failed to send Telegram notification:', error);
+        });
+
+        // Send push notification to mobile app (don't await to avoid blocking)
+        sendPushNotification({
+          chatId: chat.id,
+          merchantEmail: chat.merchantEmail,
+          shopName: chat.shopName,
+          message: input.content,
+        }).catch(error => {
+          console.error('Failed to send push notification:', error);
         });
       } catch (error) {
         // Log error but don't break the message sending flow
