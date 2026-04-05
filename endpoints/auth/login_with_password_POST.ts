@@ -4,11 +4,15 @@ import { sql } from "kysely";
 import { schema } from "./login_with_password_POST.schema";
 import { compare } from "bcryptjs";
 import { randomBytes } from "crypto";
+import { SignJWT } from "jose";
 import {
   setServerSession,
   SessionExpirationSeconds,
 } from "../../helpers/getSetServerSession";
 import { User } from "../../helpers/User";
+
+const jwtEncoder = new TextEncoder();
+const jwtSecret = process.env.JWT_SECRET;
 
 // Configuration constants
 const RATE_LIMIT_CONFIG = {
@@ -235,16 +239,26 @@ export async function handle(request: Request) {
       role: user.role as User['role'],
     };
 
-    const response = Response.json({
-      user: userData,
-    });
-
-    // Set session cookie
-    await setServerSession(response, {
+    const sessionPayload = {
       id: result.sessionId,
       createdAt: result.sessionCreatedAt.getTime(),
       lastAccessed: result.sessionCreatedAt.getTime(),
+    };
+
+    // Generate JWT token for mobile clients (React Native can't read HttpOnly cookies)
+    const token = await new SignJWT(sessionPayload)
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("1d")
+      .sign(jwtEncoder.encode(jwtSecret));
+
+    const response = Response.json({
+      user: userData,
+      token, // Mobile clients use this; web clients ignore it and use the cookie
     });
+
+    // Set session cookie (for web clients)
+    await setServerSession(response, sessionPayload);
 
     return response;
   } catch (error) {
