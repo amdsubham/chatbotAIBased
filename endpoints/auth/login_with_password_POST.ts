@@ -249,7 +249,7 @@ export async function handle(request: Request) {
     const token = await new SignJWT(sessionPayload)
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
-      .setExpirationTime("1d")
+      .setExpirationTime("7d")
       .sign(jwtEncoder.encode(jwtSecret));
 
     const response = Response.json({
