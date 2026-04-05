@@ -1,6 +1,7 @@
 import { db } from "../../helpers/db";
 import { getServerSessionOrThrow } from "../../helpers/getSetServerSession";
 import { getServerUserSession } from "../../helpers/getServerUserSession";
+import superjson from "superjson";
 
 export async function handle(request: Request) {
   try {
@@ -10,7 +11,8 @@ export async function handle(request: Request) {
       return Response.json({ message: "Not authenticated" }, { status: 401 });
     }
 
-    const { token, platform } = await request.json();
+    const json = superjson.parse(await request.text()) as { token?: string; platform?: string };
+    const { token, platform } = json;
 
     if (!token || typeof token !== "string") {
       return Response.json({ message: "Token is required" }, { status: 400 });

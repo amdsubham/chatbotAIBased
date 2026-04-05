@@ -1,8 +1,10 @@
 import { db } from "../../helpers/db";
+import superjson from "superjson";
 
 export async function handle(request: Request) {
   try {
-    const { token } = await request.json();
+    const json = superjson.parse(await request.text()) as { token?: string };
+    const { token } = json;
 
     if (!token || typeof token !== "string") {
       return Response.json({ message: "Token is required" }, { status: 400 });
