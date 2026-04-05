@@ -1,3 +1,4 @@
+import { SignJWT } from "jose";
 import {
   setServerSession,
   NotAuthenticatedError,
@@ -5,11 +6,29 @@ import {
 import { User } from "../../helpers/User";
 import { getServerUserSession } from "../../helpers/getServerUserSession";
 
+const jwtEncoder = new TextEncoder();
+const jwtSecret = process.env.JWT_SECRET;
+
 export async function handle(request: Request) {
   try {
     const { user, session } = await getServerUserSession(request);
 
-    // Create response with user data
+    const sessionPayload = {
+      id: session.id,
+      createdAt: session.createdAt,
+      lastAccessed: session.lastAccessed.getTime(),
+    };
+
+    // Generate a refreshed JWT token for mobile clients
+    // Mobile apps can't read HttpOnly Set-Cookie headers, so we return
+    // the token in the response body. This keeps the session alive.
+    const token = await new SignJWT(sessionPayload)
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("7d")
+      .sign(jwtEncoder.encode(jwtSecret));
+
+    // Create response with user data + refreshed token
     const response = Response.json({
       user: {
         id: user.id,
@@ -18,14 +37,11 @@ export async function handle(request: Request) {
         avatarUrl: user.avatarUrl,
         role: user.role,
       } satisfies User,
+      token, // Mobile clients use this to stay logged in
     });
 
-    // Update the session cookie with the new lastAccessed time
-    await setServerSession(response, {
-      id: session.id,
-      createdAt: session.createdAt,
-      lastAccessed: session.lastAccessed.getTime(),
-    });
+    // Update the session cookie (for web clients)
+    await setServerSession(response, sessionPayload);
 
     return response;
   } catch (error) {
