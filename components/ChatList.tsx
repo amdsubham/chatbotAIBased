@@ -2,6 +2,8 @@ import React, { useState, useMemo } from "react";
 import { useChatsQuery } from "../helpers/useChatsQuery";
 import { useDebounce } from "../helpers/useDebounce";
 import { useDeleteChatMutation } from "../helpers/useDeleteChatMutation";
+import { useFavoritesQuery } from "../helpers/useFavoritesQuery";
+import { useToggleFavoriteMutation } from "../helpers/useToggleFavoriteMutation";
 import { Button } from "./Button";
 import { Checkbox } from "./Checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "./Dialog";
@@ -17,33 +19,16 @@ interface ChatListProps {
   onSelectChat: (chatId: number) => void;
 }
 
-const FAVORITES_KEY = "chatbot_favorite_chats";
-
-const loadFavorites = (): Set<number> => {
-  try {
-    return new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]"));
-  } catch {
-    return new Set();
-  }
-};
-
-const saveFavorites = (favs: Set<number>) => {
-  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favs]));
-};
-
 export const ChatList = ({ selectedChatId, onSelectChat }: ChatListProps) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [favorites, setFavorites] = useState<Set<number>>(loadFavorites);
   const [showFavorites, setShowFavorites] = useState(true);
 
+  const { data: favoriteIds = [] } = useFavoritesQuery();
+  const favorites = useMemo(() => new Set(favoriteIds), [favoriteIds]);
+  const toggleFavoriteMutation = useToggleFavoriteMutation();
+
   const toggleFavorite = (chatId: number) => {
-    setFavorites((prev) => {
-      const next = new Set(prev);
-      if (next.has(chatId)) next.delete(chatId);
-      else next.add(chatId);
-      saveFavorites(next);
-      return next;
-    });
+    toggleFavoriteMutation.mutate({ chatId });
   };
   const [statusFilter, setStatusFilter] = useState<ChatStatus | "all" | "online">("all");
   const [hasAdminResponse, setHasAdminResponse] = useState<boolean | undefined>(undefined);

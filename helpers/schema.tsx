@@ -130,10 +130,17 @@ export interface DeviceTokens {
   updatedAt: Generated<Timestamp>;
 }
 
+export interface FavoriteChats {
+  id: Generated<number>;
+  chatId: number;
+  createdAt: Generated<Timestamp>;
+}
+
 export interface DB {
   availabilitySlots: AvailabilitySlots;
   chats: Chats;
   deviceTokens: DeviceTokens;
+  favoriteChats: FavoriteChats;
   knowledgeBase: KnowledgeBase;
   loginAttempts: LoginAttempts;
   messages: Messages;
