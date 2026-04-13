@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Skeleton } from "./Skeleton";
 import { ChatListFilters } from "./ChatListFilters";
 import { ChatListItem } from "./ChatListItem";
-import { Inbox, Trash2 } from "lucide-react";
+import { Inbox, Trash2, Star, ChevronDown, ChevronRight } from "lucide-react";
 import { ChatStatus } from "../helpers/schema";
 import styles from "./ChatList.module.css";
 
@@ -17,8 +17,34 @@ interface ChatListProps {
   onSelectChat: (chatId: number) => void;
 }
 
+const FAVORITES_KEY = "chatbot_favorite_chats";
+
+const loadFavorites = (): Set<number> => {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]"));
+  } catch {
+    return new Set();
+  }
+};
+
+const saveFavorites = (favs: Set<number>) => {
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favs]));
+};
+
 export const ChatList = ({ selectedChatId, onSelectChat }: ChatListProps) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [favorites, setFavorites] = useState<Set<number>>(loadFavorites);
+  const [showFavorites, setShowFavorites] = useState(true);
+
+  const toggleFavorite = (chatId: number) => {
+    setFavorites((prev) => {
+      const next = new Set(prev);
+      if (next.has(chatId)) next.delete(chatId);
+      else next.add(chatId);
+      saveFavorites(next);
+      return next;
+    });
+  };
   const [statusFilter, setStatusFilter] = useState<ChatStatus | "all" | "online">("all");
   const [hasAdminResponse, setHasAdminResponse] = useState<boolean | undefined>(undefined);
   const [needsAttention, setNeedsAttention] = useState<boolean | undefined>(undefined);
@@ -220,16 +246,51 @@ export const ChatList = ({ selectedChatId, onSelectChat }: ChatListProps) => {
             <p>No chats found.</p>
           </div>
         ) : (
-          chats.map((chat) => (
-            <ChatListItem
-              key={chat.id}
-              chat={chat}
-              isSelected={selectedChatId === chat.id}
-              isBulkSelected={selectedChatIds.has(chat.id)}
-              onSelect={() => onSelectChat(chat.id)}
-              onBulkSelect={() => handleSelectChat(chat.id)}
-            />
-          ))
+          <>
+            {/* Favorites section */}
+            {(() => {
+              const favoriteChats = chats.filter((c) => favorites.has(c.id));
+              if (favoriteChats.length === 0) return null;
+              return (
+                <div className={styles.favoritesSection}>
+                  <button
+                    className={styles.favoritesSectionHeader}
+                    onClick={() => setShowFavorites((v) => !v)}
+                  >
+                    <Star size={14} fill="currentColor" className={styles.favoritesIcon} />
+                    <span>Favorites ({favoriteChats.length})</span>
+                    {showFavorites ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                  </button>
+                  {showFavorites && favoriteChats.map((chat) => (
+                    <ChatListItem
+                      key={`fav-${chat.id}`}
+                      chat={chat}
+                      isSelected={selectedChatId === chat.id}
+                      isBulkSelected={selectedChatIds.has(chat.id)}
+                      isFavorite={true}
+                      onSelect={() => onSelectChat(chat.id)}
+                      onBulkSelect={() => handleSelectChat(chat.id)}
+                      onToggleFavorite={() => toggleFavorite(chat.id)}
+                    />
+                  ))}
+                </div>
+              );
+            })()}
+
+            {/* All chats */}
+            {chats.map((chat) => (
+              <ChatListItem
+                key={chat.id}
+                chat={chat}
+                isSelected={selectedChatId === chat.id}
+                isBulkSelected={selectedChatIds.has(chat.id)}
+                isFavorite={favorites.has(chat.id)}
+                onSelect={() => onSelectChat(chat.id)}
+                onBulkSelect={() => handleSelectChat(chat.id)}
+                onToggleFavorite={() => toggleFavorite(chat.id)}
+              />
+            ))}
+          </>
         )}
       </div>
 

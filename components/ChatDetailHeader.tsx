@@ -9,8 +9,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "./DropdownMenu";
-import { ArrowLeft, RefreshCw, Trash2, Download, Mail, BookPlus, ChevronDown, ChevronUp, Maximize2 } from "lucide-react";
+import { ArrowLeft, RefreshCw, Trash2, Download, Mail, BookPlus, ChevronDown, ChevronUp, Maximize2, ListTodo } from "lucide-react";
 import { AddQAFromChatDialog } from "./AddQAFromChatDialog";
+import { CreateTaskDialog } from "./CreateTaskDialog";
 import { useUpdateChatAiSettingMutation } from "../helpers/useUpdateChatAiSettingMutation";
 import { useSettingsQuery } from "../helpers/useSettingsQuery";
 import { useMerchantUserByEmail } from "../helpers/useMerchantUsersQuery";
@@ -62,6 +63,7 @@ export const ChatDetailHeader = ({
 
   // Collapse state for mobile
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [taskDialogOpen, setTaskDialogOpen] = useState(false);
 
   // Initialize collapsed state based on screen size
   useEffect(() => {
@@ -245,6 +247,20 @@ export const ChatDetailHeader = ({
               </TooltipContent>
             </Tooltip>
           )}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className={styles.iconButton}
+                onClick={() => setTaskDialogOpen(true)}
+                aria-label="Create task"
+              >
+                <ListTodo size={14} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Create task</TooltipContent>
+          </Tooltip>
           <AddQAFromChatDialog chatId={chat.id}>
             <Button
               variant="outline"
@@ -307,6 +323,14 @@ export const ChatDetailHeader = ({
           </Tooltip>
         </div>
       </div>
+
+      <CreateTaskDialog
+        open={taskDialogOpen}
+        onOpenChange={setTaskDialogOpen}
+        defaultTitle={`Chat issue: ${chat.merchantEmail}`}
+        merchantName={chat.shopName || ""}
+        merchantEmail={chat.merchantEmail}
+      />
     </header>
   );
 };

@@ -1,7 +1,7 @@
 import { Badge } from "./Badge";
 import { Checkbox } from "./Checkbox";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
-import { AlertCircle, BotOff, Bot } from "lucide-react";
+import { AlertCircle, BotOff, Bot, Star } from "lucide-react";
 import { ChatStatus } from "../helpers/schema";
 import styles from "./ChatListItem.module.css";
 
@@ -9,16 +9,20 @@ interface ChatListItemProps {
   chat: any;
   isSelected: boolean;
   isBulkSelected: boolean;
+  isFavorite?: boolean;
   onSelect: () => void;
   onBulkSelect: () => void;
+  onToggleFavorite?: () => void;
 }
 
-export const ChatListItem = ({ 
-  chat, 
-  isSelected, 
-  isBulkSelected, 
-  onSelect, 
-  onBulkSelect 
+export const ChatListItem = ({
+  chat,
+  isSelected,
+  isBulkSelected,
+  isFavorite = false,
+  onSelect,
+  onBulkSelect,
+  onToggleFavorite,
 }: ChatListItemProps) => {
   const getStatusVariant = (status: ChatStatus) => {
     switch (status) {
@@ -82,6 +86,23 @@ export const ChatListItem = ({
             aria-label={`Select chat with ${chat.merchantEmail}`}
           />
           <span className={styles.email}>{chat.merchantEmail}</span>
+          {onToggleFavorite && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  className={`${styles.favoriteButton} ${isFavorite ? styles.favorited : ""}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleFavorite();
+                  }}
+                  aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+                >
+                  <Star size={14} fill={isFavorite ? "currentColor" : "none"} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>{isFavorite ? "Remove from favorites" : "Add to favorites"}</TooltipContent>
+            </Tooltip>
+          )}
           {isWidgetOnline(chat) && (
             <Tooltip>
               <TooltipTrigger asChild>
